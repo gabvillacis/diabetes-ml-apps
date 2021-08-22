@@ -1,3 +1,20 @@
+######################
+# Visual Studio Code
+######################
+.vscode/
+
+######################
+# IntelliJ
+######################
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+classes/
+out/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,24 @@
+DEFINICIÓN DE INPUTS:
+
+Pregnancies		        Embarazos			        Número de embarazos
+PlasmaGlucose		    Glucosa				        Concentración de glucosa en plasma durante 2 horas en una prueba de tolerancia a la glucosa oral
+DiastolicBloodPressure	Presión arterial		    Presión arterial diastólica (mm Hg)
+TricepsThickness	    Espesor de la piel		    Espesor del pliegue cutáneo del tríceps (mm)
+SerumInsulin		    Insulina			        Insulina sérica de 2 horas (mu U/ml)
+BMI			            IMC			                Índice de masa corporal (peso en kg/(altura en m)2)
+DiabetesPedigree	    DiabetesPedigreeFunction	Diabetes pedigree function (una función que puntúa la probabilidad de padecer diabetes en función de los antecedentes familiares)
+Age			            Edad				        Edad (años)
+
+
+Resultado (0 si no es diabético, 1 si es diabético)
+
+
+Orden de las variables:
+Embarazos
+Glucosa
+Presión arterial
+Espesor de la piel
+Insulina
+IMC
+DiabetesPedigreeFunction
+Edad
