@@ -4,6 +4,7 @@ import pickle
 import pandas as pd
 import numpy as np
 import uvicorn
+from security.admin_security_routes import admin_security_router
 
 app = FastAPI()
 
@@ -56,6 +57,9 @@ def procesar_prediccion_diabetes(diabetes_pred_in: DiabetesPredIn):
     final_prediction = np.argmax(prediction_values)
     
     return DiabetesPredOut(tiene_diabetes = final_prediction)
+
+
+app.include_router(admin_security_router, prefix='/admin', tags=['security-admin'])
 
 
 if __name__ == '__main__':
