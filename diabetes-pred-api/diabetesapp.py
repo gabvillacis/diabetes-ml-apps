@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 import pickle
 import pandas as pd
 import numpy as np
 import uvicorn
 from security.admin_security_routes import admin_security_router
+from security.security_api_key import verificar_api_key
 
 app = FastAPI()
 
@@ -29,7 +30,7 @@ def index():
     return {'mensaje': 'Hello from Diabetes Prediction API'}
 
 
-@app.post('/diabetes-predictions', response_model=DiabetesPredOut, status_code=201)
+@app.post('/diabetes-predictions', response_model=DiabetesPredOut, status_code=201, dependencies=[Depends(verificar_api_key)])
 def procesar_prediccion_diabetes(diabetes_pred_in: DiabetesPredIn):
     
     print('Nuevo request para predecir un caso de diabetes:', diabetes_pred_in)

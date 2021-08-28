@@ -1,6 +1,7 @@
 import sqlite3
 import secrets
 from datetime import datetime
+import threading
 
 class SecurityDataManager:
     def __init__(self):
@@ -34,5 +35,33 @@ class SecurityDataManager:
             connection.commit()
             
         return api_key
+    
+
+    def comprobar_api_key(self, api_key: str) -> bool:
+        with sqlite3.connect(self.db_location) as connection:
+            
+            c = connection.cursor()
+            
+            c.execute("""SELECT api_key FROM api_keys WHERE api_key = ?""", [api_key] )
+            response = c.fetchone()
+            
+            if not response:
+                return False
+            else:
+                threading.Thread(target=self.actualizar_uso_api_key, args=[api_key]).start()
+                return True
+        
+            
+    def actualizar_uso_api_key(self, api_key: str):
+        with sqlite3.connect(self.db_location) as connection:
+            c = connection.cursor()
+            
+            fecha_actual = datetime.utcnow().isoformat()
+            
+            c.execute("""UPDATE api_keys SET contador_req = contador_req + 1, fecha_ultimo_req = ? WHERE api_key = ?""",
+                      [fecha_actual, api_key])
+            
+            connection.commit()
+    
     
 security_data_manager = SecurityDataManager()

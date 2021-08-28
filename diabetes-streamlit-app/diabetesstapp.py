@@ -19,7 +19,9 @@ def execute_prediction_request(embarazos: int, glucosa: float, presion_arterial:
         'edad': edad
     }
     
-    response = requests.post(API_URLBASE + '/diabetes-predictions', data=json.dumps(payload))
+    headers_dict = {'x-api-key': 'EEcl1I6-xV9Acb8WFZGzV7SkZ4IFxnJ3itjnu-IEmQiJnDk0sDX38vYOjA04EcQvlcRLJmCueqsu54cE7ISt5VoDP7HCY2oGsW9K'}
+    
+    response = requests.post(API_URLBASE + '/diabetes-predictions', headers=headers_dict, data=json.dumps(payload))
     
     if response.status_code == 201:       
         return response.json().get('tiene_diabetes')
