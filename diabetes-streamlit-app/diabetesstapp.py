@@ -21,8 +21,7 @@ def execute_prediction_request(embarazos: int, glucosa: float, presion_arterial:
     
     response = requests.post(API_URLBASE + '/diabetes-predictions', data=json.dumps(payload))
     
-    if response.status_code == 201:
-        print(response.json().get('tiene_diabetes'))
+    if response.status_code == 201:       
         return response.json().get('tiene_diabetes')
     else:
         response.raise_for_status()
