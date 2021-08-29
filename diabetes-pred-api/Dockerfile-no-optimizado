@@ -1,0 +1,19 @@
+FROM python:3.9-slim
+
+RUN pip install pipenv
+
+WORKDIR /app
+
+COPY Pipfile .
+COPY Pipfile.lock .
+
+RUN PIPENV_VENV_IN_PROJECT=1 pipenv install --deploy
+
+ENV PATH="/app/.venv/bin:$PATH"
+
+COPY diabetesapp.py rf_model.pkl ./
+COPY /security ./security
+
+EXPOSE 3000
+
+CMD ["uvicorn", "diabetesapp:app", "--host", "0.0.0.0", "--port", "3000"]
