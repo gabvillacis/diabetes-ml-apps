@@ -6,6 +6,7 @@ import numpy as np
 import uvicorn
 from security.admin_security_routes import admin_security_router
 from security.security_api_key import verificar_api_key
+from db.database import database
 
 app = FastAPI()
 
@@ -26,12 +27,12 @@ class DiabetesPredOut(BaseModel):
     
 
 @app.get('/')
-def index():
+async def index():
     return {'mensaje': 'Hello from Diabetes Prediction API'}
 
 
 @app.post('/diabetes-predictions', response_model=DiabetesPredOut, status_code=201, dependencies=[Depends(verificar_api_key)])
-def procesar_prediccion_diabetes(diabetes_pred_in: DiabetesPredIn):
+async def procesar_prediccion_diabetes(diabetes_pred_in: DiabetesPredIn):
     
     print('Nuevo request para predecir un caso de diabetes:', diabetes_pred_in)
     
@@ -62,6 +63,16 @@ def procesar_prediccion_diabetes(diabetes_pred_in: DiabetesPredIn):
 
 app.include_router(admin_security_router, prefix='/admin', tags=['security-admin'])
 
+
+@app.on_event("startup")
+async def startup():
+    await database.connect()
+
+
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
+    
 
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=8000, debug=True)

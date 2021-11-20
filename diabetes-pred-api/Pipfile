@@ -9,8 +9,12 @@ uvicorn = "*"
 pandas = "*"
 numpy = "*"
 scikit-learn = "*"
+sqlalchemy = "*"
+databases = "*"
+aiomysql = "*"
+mysqlclient = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"
