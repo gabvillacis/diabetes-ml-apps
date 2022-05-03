@@ -1,8 +1,9 @@
 import streamlit as st
 import requests
-import json
+import os
 
-API_URLBASE = 'http://localhost:8000'
+API_URLBASE = os.getenv("API_URLBASE")
+API_KEY = os.getenv("API_KEY")
 
 
 def execute_prediction_request(embarazos: int, glucosa: float, presion_arterial: float, espesor_piel: float,
@@ -19,7 +20,7 @@ def execute_prediction_request(embarazos: int, glucosa: float, presion_arterial:
         'edad': edad
     }
     
-    headers_dict = {'x-api-key': 'EEcl1I6-xV9Acb8WFZGzV7SkZ4IFxnJ3itjnu-IEmQiJnDk0sDX38vYOjA04EcQvlcRLJmCueqsu54cE7ISt5VoDP7HCY2oGsW9K'}
+    headers_dict = {'x-api-key': API_KEY}
     
     response = requests.post(API_URLBASE + '/diabetes-predictions', headers=headers_dict, data=json.dumps(payload))
     
