@@ -1,10 +1,10 @@
 import streamlit as st
 import requests
 import os
+import json
 
 API_URLBASE = os.getenv("API_URLBASE")
 API_KEY = os.getenv("API_KEY")
-
 
 def execute_prediction_request(embarazos: int, glucosa: float, presion_arterial: float, espesor_piel: float,
                                 insulina: float, imc: float, diabetes_pedigree_function: float, edad: int) -> bool:
